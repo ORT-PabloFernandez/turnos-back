@@ -9,15 +9,16 @@
     "mongodb": "^6.16.0",
     "morgan": "^1.10.0"
   },
-  "name": "tp2-template-api",
+  "name": "turnos-medicos-api",
   "version": "1.0.0",
-  "main": "temp.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"no test yet\"",
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "init-db": "node scripts/init-db.js"
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "API REST para sistema de gestión de turnos médicos"
 }

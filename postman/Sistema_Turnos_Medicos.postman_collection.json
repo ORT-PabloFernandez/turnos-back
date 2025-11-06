@@ -1,0 +1,927 @@
+{
+	"info": {
+		"_postman_id": "turnos-medicos-api-collection",
+		"name": "Sistema Turnos Médicos API",
+		"description": "Colección completa de endpoints para el sistema de gestión de turnos médicos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"test_user\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const responseJson = pm.response.json();",
+									"    pm.environment.set(\"authToken\", responseJson.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@hospital.com\",\n  \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profesionales",
+			"item": [
+				{
+					"name": "Get All Profesionales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/profesionales",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"profesionales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profesional by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/profesionales/{{profesionalId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"profesionales",
+								"{{profesionalId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Profesional",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Dr. Ana García\",\n  \"especialidad\": \"Pediatría\",\n  \"email\": \"ana.garcia@hospital.com\",\n  \"avatar\": \"https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&h=150&fit=crop&crop=face\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/profesionales",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"profesionales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profesional",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Dr. Ana García Actualizada\",\n  \"especialidad\": \"Pediatría Especializada\",\n  \"email\": \"ana.garcia.updated@hospital.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/profesionales/{{profesionalId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"profesionales",
+								"{{profesionalId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Profesional",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/profesionales/{{profesionalId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"profesionales",
+								"{{profesionalId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Horarios",
+			"item": [
+				{
+					"name": "Get All Horarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/horarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"horarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Horarios by Profesional",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/horarios?profesionalId=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"horarios"
+							],
+							"query": [
+								{
+									"key": "profesionalId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Horarios Disponibles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/horarios?disponible=true",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"horarios"
+							],
+							"query": [
+								{
+									"key": "disponible",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Horarios by Date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/horarios?fecha=2025-01-15",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"horarios"
+							],
+							"query": [
+								{
+									"key": "fecha",
+									"value": "2025-01-15"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Horarios with Multiple Filters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/horarios?profesionalId=1&fecha=2025-01-15&disponible=true",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"horarios"
+							],
+							"query": [
+								{
+									"key": "profesionalId",
+									"value": "1"
+								},
+								{
+									"key": "fecha",
+									"value": "2025-01-15"
+								},
+								{
+									"key": "disponible",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Horario by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/horarios/{{horarioId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"horarios",
+								"{{horarioId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Horario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"profesionalId\": 1,\n  \"fecha\": \"2025-01-20\",\n  \"hora\": \"10:00\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/horarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"horarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Horario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"profesionalId\": 1,\n  \"fecha\": \"2025-01-20\",\n  \"hora\": \"11:00\",\n  \"disponible\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/horarios/{{horarioId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"horarios",
+								"{{horarioId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Disponibilidad",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"disponible\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/horarios/{{horarioId}}/disponibilidad",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"horarios",
+								"{{horarioId}}",
+								"disponibilidad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Horario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/horarios/{{horarioId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"horarios",
+								"{{horarioId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Turnos",
+			"item": [
+				{
+					"name": "Get All Turnos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/turnos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"turnos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Turnos by Usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/turnos?usuarioId=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"turnos"
+							],
+							"query": [
+								{
+									"key": "usuarioId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Turnos by Profesional",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/turnos?profesionalId=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"turnos"
+							],
+							"query": [
+								{
+									"key": "profesionalId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Turnos by Usuario (Endpoint específico)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/turnos/usuario/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"turnos",
+								"usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Turno by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/turnos/{{turnoId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"turnos",
+								"{{turnoId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reservar Turno",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"horarioId\": \"1-2025-01-15-09:00\",\n  \"usuario\": {\n    \"id\": 1,\n    \"nombre\": \"Juan Paciente\",\n    \"email\": \"juan@email.com\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/turnos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"turnos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Turno",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"estado\": \"confirmado\",\n  \"usuario\": {\n    \"id\": 1,\n    \"nombre\": \"Juan Paciente Actualizado\",\n    \"email\": \"juan.updated@email.com\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/turnos/{{turnoId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"turnos",
+								"{{turnoId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar Turno",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/turnos/{{turnoId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"turnos",
+								"{{turnoId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users (Existing)",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Listings (Existing)",
+			"item": [
+				{
+					"name": "Get All Listings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/listings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"listings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Listing by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/listings/{{listingId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"listings",
+								"{{listingId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "API Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "authToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "profesionalId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "horarioId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "turnoId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "listingId",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

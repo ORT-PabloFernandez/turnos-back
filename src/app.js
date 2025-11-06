@@ -1,25 +1,43 @@
 import express from "express";
 import morgan from "morgan";
+import cors from "cors";
+
+// Rutas existentes
 import userRoutes from "./routes/userRoute.js";
 import listingsRoutes from "./routes/listingsRouter.js";
 
-import cors from "cors";
+// Nuevas rutas para el sistema de turnos
+import profesionalesRoutes from "./routes/profesionalesRouter.js";
+import horariosRoutes from "./routes/horariosRouter.js";
+import turnosRoutes from "./routes/turnosRouter.js";
 
 const app = express();
 
-// Middlewars
+// Middlewares
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
 
-// Rutas
+// Rutas existentes
 app.use("/api/users", userRoutes);
 app.use("/api/listings", listingsRoutes);
+
+// Nuevas rutas para el sistema de turnos
+app.use("/api/profesionales", profesionalesRoutes);
+app.use("/api/horarios", horariosRoutes);
+app.use("/api/turnos", turnosRoutes);
 
 // Ruta base
 app.get("/", (req, res) => {
     res.json({
-        message: "API TP2 - Examen 2025 C2"
+        message: "API Sistema de Turnos Médicos - 2025",
+        endpoints: {
+            profesionales: "/api/profesionales",
+            horarios: "/api/horarios", 
+            turnos: "/api/turnos",
+            users: "/api/users",
+            listings: "/api/listings"
+        }
     });
 });
 
