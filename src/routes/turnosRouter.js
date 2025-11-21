@@ -1,11 +1,11 @@
 import express from "express";
-import { 
-    getAllTurnos, 
-    getTurnoById, 
+import {
+    getAllTurnos,
+    getTurnoById,
     getTurnosByUsuario,
-    reservarTurnoController, 
+    reservarTurnoController,
     cancelarTurnoController,
-    updateTurnoController 
+    updateTurnoController
 } from "../controllers/turnosController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
@@ -13,8 +13,9 @@ const router = express.Router();
 
 // Rutas públicas
 router.get("/", getAllTurnos);
-router.get("/:id", getTurnoById);
 router.get("/usuario/:usuarioId", getTurnosByUsuario);
+router.get("/:id", getTurnoById);
+
 
 // Rutas protegidas (requieren autenticación)
 router.post("/", authMiddleware, reservarTurnoController);
