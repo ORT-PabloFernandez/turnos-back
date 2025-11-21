@@ -10,15 +10,27 @@ import {
 } from "../data/horariosData.js";
 
 export const getHorarios = async (profesionalId = null, fecha = null, disponible = null) => {
+    //Trae todos los horarios desde la base/datalayer
+    let horarios = await getAllHorarios();
+
+    //Filtra por profesional si vino en la query
+    if (profesionalId !== null) {
+        horarios = horarios.filter(h => h.profesionalId === profesionalId);
+    }
+
+    //Filtra por fecha si vino en la query
+    if (fecha !== null) {
+        // asumiendo que fecha se guarda como 'YYYY-MM-DD' en la BD
+        horarios = horarios.filter(h => h.fecha === fecha);
+    }
+
+    //Filtra por disponibilidad si vino en la query
     if (disponible !== null) {
-        return await getHorariosDisponibles(profesionalId, fecha);
+        horarios = horarios.filter(h => h.disponible === disponible);
     }
-    
-    if (profesionalId) {
-        return await getHorariosByProfesional(profesionalId);
-    }
-    
-    return await getAllHorarios();
+
+    //Devuelve el resultado final ya filtrado
+    return horarios;
 };
 
 export const getHorario = async (id) => {
