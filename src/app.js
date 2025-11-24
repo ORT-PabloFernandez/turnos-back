@@ -10,6 +10,7 @@ import listingsRoutes from "./routes/listingsRouter.js";
 import profesionalesRoutes from "./routes/profesionalesRouter.js";
 import horariosRoutes from "./routes/horariosRouter.js";
 import turnosRoutes from "./routes/turnosRouter.js";
+import especialidadesRoutes from "./routes/especialidadesRouter.js";
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/api/listings", listingsRoutes);
 app.use("/api/profesionales", profesionalesRoutes);
 app.use("/api/horarios", horariosRoutes);
 app.use("/api/turnos", turnosRoutes);
+app.use("/api/especialidades", especialidadesRoutes);
 
 // Ruta base
 app.get("/", (req, res) => {
@@ -36,7 +38,8 @@ app.get("/", (req, res) => {
             horarios: "/api/horarios", 
             turnos: "/api/turnos",
             users: "/api/users",
-            listings: "/api/listings"
+            listings: "/api/listings",
+            especialidades: "/api/especialidades"
         }
     });
 });
