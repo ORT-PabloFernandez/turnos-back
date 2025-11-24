@@ -45,6 +45,7 @@ export const getTurnosByUsuario = async (req, res) => {
 
 export const reservarTurnoController = async (req, res) => {
     try {
+        console.log(">>> BODY RECIBIDO:", req.body);
         const result = await reservarTurnoService(req.body);
         res.status(201).json({ 
             message: "Turno reservado exitosamente", 
