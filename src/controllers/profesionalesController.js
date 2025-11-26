@@ -1,6 +1,7 @@
 import { 
     getProfesionales, 
-    getProfesional, 
+    getProfesional,
+    getProfesionalEspecialidad,
     createProfesionalService, 
     updateProfesionalService, 
     deleteProfesionalService 
@@ -21,6 +22,19 @@ export const getProfesionalById = async (req, res) => {
         const profesional = await getProfesional(req.params.id);
         if (!profesional) {
             return res.status(404).json({ message: "Profesional no encontrado" });
+        }
+        res.json(profesional);
+    } catch (error) {
+        console.log("Error fetching profesional: ", error);
+        res.status(500).json({ message: "Error interno del servidor" });
+    }
+};
+
+export const getProfesionalByEspecialidad = async (req, res) => {
+    try {
+        const profesional = await getProfesionalEspecialidad(req.params.especialidad);
+        if (!profesional) {
+            return res.status(404).json({ message: "No se encontraron profesionales con la especialidad seleccionada" });
         }
         res.json(profesional);
     } catch (error) {

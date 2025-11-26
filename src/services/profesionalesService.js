@@ -1,6 +1,7 @@
 import { 
     getAllProfesionales, 
-    getProfesionalById, 
+    getProfesionalById,
+    getProfesionalByEspecialidad,
     createProfesional, 
     updateProfesional, 
     deleteProfesional 
@@ -12,6 +13,10 @@ export const getProfesionales = async () => {
 
 export const getProfesional = async (id) => {
     return await getProfesionalById(id);
+};
+
+export const getProfesionalEspecialidad = async (especialidad) => {
+    return await getProfesionalByEspecialidad(especialidad);
 };
 
 export const createProfesionalService = async (profesionalData) => {
