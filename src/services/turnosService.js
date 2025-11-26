@@ -9,7 +9,7 @@ import {
     deleteTurno,
     deleteTurnoByHorarioId
 } from "../data/turnosData.js";
-import { updateHorarioDisponibilidad } from "../data/horariosData.js";
+import { updateHorarioDisponibilidad, getHorarioById } from "../data/horariosData.js";
 
 export const getTurnos = async (usuarioId = null, profesionalId = null) => {
     if (usuarioId) {
@@ -37,6 +37,12 @@ export const reservarTurnoService = async (turnoData) => {
     if (!usuario.id || !usuario.nombre || !usuario.email) {
         throw new Error("Datos de usuario incompletos (id, nombre, email)");
     }
+
+    // Obtener el horario real
+    const horarioReal = await getHorarioById(horarioId);
+    if (!horarioReal) {
+        throw new Error("Horario no encontrado");
+    }
     
     // Verificar si ya existe un turno para este horario
     const turnoExistente = await getTurnoByHorarioId(horarioId);
@@ -46,6 +52,9 @@ export const reservarTurnoService = async (turnoData) => {
     
     const turno = {
         horarioId,
+        profesionalId: horarioReal.profesionalId,
+        fecha: horarioReal.fecha,   
+        hora: horarioReal.hora,     
         usuario: {
             id: parseInt(usuario.id),
             nombre: usuario.nombre,
