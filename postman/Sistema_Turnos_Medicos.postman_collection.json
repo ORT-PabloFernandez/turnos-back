@@ -789,6 +789,34 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Update User By ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fechaNacimiento\": \"1990-01-01\",\r\n    \"avatar\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/692785f40b94d26a3dd02b42",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"692785f40b94d26a3dd02b42"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
