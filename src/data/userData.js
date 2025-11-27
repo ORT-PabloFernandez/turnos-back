@@ -12,7 +12,6 @@ export async function findAllUsers() {
 export async function findUserById(id) {
     const db = getDb();
     const user = await db.collection("users").findOne({_id: new ObjectId(id)});
-    console.log("find userrr", user);
     return user;
 }
 
