@@ -13,6 +13,11 @@ export const getProfesionalById = async (id) => {
     return await db.collection(COLLECTION_NAME).findOne({ _id: new ObjectId(id) });
 };
 
+export const getProfesionalByEspecialidad = async (especialidad) => {
+    const db = getDb();
+    return await db.collection(COLLECTION_NAME).find({ especialidad }).toArray();
+};
+
 export const createProfesional = async (profesional) => {
     const db = getDb();
     return await db.collection(COLLECTION_NAME).insertOne(profesional);

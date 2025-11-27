@@ -2,6 +2,7 @@ import express from "express";
 import { 
     getAllProfesionales, 
     getProfesionalById, 
+    getProfesionalByEspecialidad,
     createProfesionalController, 
     updateProfesionalController, 
     deleteProfesionalController 
@@ -12,6 +13,7 @@ const router = express.Router();
 
 // Rutas públicas
 router.get("/", getAllProfesionales);
+router.get("/especialidad/:especialidad", getProfesionalByEspecialidad);
 router.get("/:id", getProfesionalById);
 
 // Rutas protegidas (requieren autenticación)
