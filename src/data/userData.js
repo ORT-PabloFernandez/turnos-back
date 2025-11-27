@@ -12,9 +12,16 @@ export async function findAllUsers() {
 export async function findUserById(id) {
     const db = getDb();
     const user = await db.collection("users").findOne({_id: new ObjectId(id)});
-    console.log(user);
     return user;
 }
+
+export const updateUser = async (id, user) => {
+    const db = getDb();
+    return await db.collection("users").updateOne(
+        { _id: new ObjectId(id) },
+        { $set: user }
+    );
+};
 
 // Busca un usuario por email y compara el password usando bcrypt
 export async function findByCredentials(email, password) {
