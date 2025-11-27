@@ -1,4 +1,4 @@
-import {getUsers, getUserById, registerUserService, loginUserService} from "../services/userService.js";
+import {getUsers, getUserById, registerUserService, loginUserService, updateUserById} from "../services/userService.js";
 import jwt from "jsonwebtoken";
 
 export const getAllUsers = async (req, res) => {
@@ -43,7 +43,7 @@ export const registerUserController = async (req, res) => {
         const result = await registerUserService({ username, email, password });
         res.status(201).json({ message: "Usuario registrado exitosamente", userId: result.insertedId });
     } catch (error) {
-        if (error.message === "El email ya está registrado") {
+        if (error.message === "El email ya está registrado" || error.message === "Username ya está registrado") {
             return res.status(409).json({ message: error.message });
         }
         console.log("Error registrando usuario: ", error);
@@ -60,6 +60,24 @@ export const getUser = async (req, res) => {
         res.json(user);
     } catch (error) {
         console.log("Error fetching users: ", error);
+        res.status(500).json({message: "Internal server error"});
+    }
+};
+
+export const updateUserController = async (req, res) => {
+    try {
+        const { avatar, fechaNacimiento, nombre, apellido } = req.body;
+        const user = await updateUserById(req.params.id, req.user._id, {avatar, fechaNacimiento, nombre, apellido});
+        if(!user){
+            return res.status(404).json({message: "Usuario no encontrado"});
+        }
+
+        res.json(user);
+    } catch (error) {
+        if (error.message === "Usuario no autorizado") {
+            return res.status(403).json({ message: error.message });
+        }
+        console.log("Error updating users: ", error);
         res.status(500).json({message: "Internal server error"});
     }
 };
